@@ -1,0 +1,291 @@
+<html>
+
+<head>
+    <title>Loan Smartcontract</title>
+    <!-- Bootstrap -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.min.js"></script>
+    <script src="js/drawdown_schedule.js"></script>
+    <script src="js/interest_payment.js"></script>
+    <script src="js/repayment_schedule.js"></script>
+    <script src="js/form-helper.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<body>
+
+    <h1>Loan Smartcontract</h1>
+    <div class="nav">
+        <h2 class="text-center">Step 1a: User enters static data to be used in the Smartcontract.</h2>
+        <div class="">This call the Loan SmartContract to request a Loan. Static data is stored in the Blockchain.</div>
+    </div>
+    
+    <form id="request_contract_form" name="request_contract_form" enctype="multipart/form-data" method="post" action="">
+    <ul>
+        <li>
+            <label for="borrower">Name of borrower
+            <input id="borrower" name="borrower" type="text" value="" size="50">
+            </label>
+        </li>
+        <li>
+            <label for="borrower_address">Borrower Address
+            <input id="borrower_address" name="borrower_address" type="text" value="" size="50">
+            </label>
+        </li>
+        <li>
+            <label for="lender">Name of Lender
+            <input id="lender" name="lender" type="text" value="" size="50">
+            </label>
+        </li>
+        <li>
+            <label for="loan_amount">Total Loan Amount
+            <input id="loan_amount" name="loan_amount" type="text" value="" size="50">
+            </label>
+        </li>
+
+        <li>
+            <label for="interest_rate">Interest Rate
+            <input id="interest_rate" name="interest_rate" type="text" value="" size="25">
+            </label>
+        </li>
+
+        <li>
+            <p class="highlight-text">Drawdown Schedule</p>
+            <label for="drawdown_schedule" class="schedule">Date: 
+            <input id="drawdown_schedule" name="drawdown_schedule" class="schedule_date datepicker" type="text" value="" size="25">
+            </label>
+            <label for="drawdown_amount" class="schedule">Drawdown Amount for specific date:
+            <input id="drawdown_amount" name="drawdown_amount" class="schedule_amount" type="text" value="" size="25">
+            </label>
+            <button type="button" class="add-row">Add Row</button>
+            
+            <table id="drawdown_schedule_table" class="schedule_table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Open Commitment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+            <button type="button" class="delete-row">Delete Row</button>
+            
+            <!-- label for="open_commitement_amount">Open Commitment Amount</label>
+            <input id="open_commitement_amount" name="open_commitement_amount" type="text" value="" size="50" -->
+        </li>
+
+        <li>
+            <p class="highlight-text">Interest Payment Schedule</p>
+            <label for="interest_schedule" class="schedule">Date: 
+            <input id="interest_schedule" name="interest_schedule" class="schedule_date datepicker" type="text" value="" size="25">
+            </label>
+            <label for="interest_amount" class="schedule">Interest Payment Amount for specific date:
+            <input id="interest_amount" name="interest_amount" class="schedule schedule_amount" type="text" value="" size="25">
+            </label>
+            <button type="button" class="add-row">Add Row</button>
+            
+            <table id="drawdown_schedule_table" class="schedule_table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Open Commitment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+            <button type="button" class="delete-row">Delete Row</button>
+            
+            <!-- label for="open_commitement_amount">Open Commitment Amount</label>
+            <input id="open_commitement_amount" name="open_commitement_amount" type="text" value="" size="50" -->
+        </li>
+
+        <li>
+            <p class="highlight-text">Repayment Schedule</p>
+            <label for="repayment_schedule" class="schedule">Date: 
+            <input id="repayment_schedule" name="repayment_schedule" class="schedule_date datepicker" type="text" value="" size="25">
+            </label>
+            <label for="repayment_amount" class="schedule">Drawdown Amount for specific date:
+            <input id="repayment_amount" name="repayment_amount" class="schedule_amount" type="text" value="" size="25">
+            </label>
+            <button type="button" class="add-row">Add Row</button>
+            
+            <table id="repayment_schedule_table" class="schedule_table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Open Commitment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+            <button type="button" class="delete-row">Delete Row</button>
+            
+            <!-- label for="open_commitement_amount">Open Commitment Amount</label>
+            <input id="open_commitement_amount" name="open_commitement_amount" type="text" value="" size="50" -->
+        </li>
+
+        <li>
+            <label for="signing_date">Signing Date:
+            <input id="signing_date" name="signing_date" class="datepicker" type="text" value="" size="18">
+            </label>
+        </li>
+        <li>
+            <label for="maturity_date">Maturity Date:</label>
+            <input id="maturity_date" name="maturity_date" class="datepicker" type="text" value="" size="18">
+        </li>
+        <li>
+            <label for="purpose_loan">Purpose of the loan:
+            <input id="purpose_loan" name="purpose_loan" type="text" value="" size="18">
+            </label>
+        </li>
+        <li>
+            <label for="availability_period">Availability Period:
+            <input id="availability_period" name="availability_period" type="text" value="" size="18">
+            </label>
+        </li>
+        <li>
+            <input id="requestContractFormButton" name="requestContractFormButton" type="submit" value="Request Loan">
+        </li>
+    </ul>
+    </form>
+
+    <div class="nav">
+        <h2 class="text-center">Step 1b: Borrower signs and closes the loan contract</h2>
+        <div class="">Borrower signs the loan contract.</div>
+    </div>
+
+    <form id="confirm_contract_form" name="confirm_contract_form" enctype="multipart/form-data" method="post" action="">
+    <ul>
+        <li>
+            <label for="lender_address">Lender Address offering the Loan
+            <input id="lender_address" name="lender_address" type="text" value="" size="50">
+            </label>
+        </li>
+        <li>
+            <label for="borrower_confirm">I accept to be the borrower of this contract.
+            <input type="checkbox" id="borrower_confirm" name="borrower_confirm" value="checked">
+            </label>
+        </li>
+        <li>
+            <input id="confirmContractFormButton" name="confirmContractFormButton" type="submit" value="Confirm Loan">
+        </li>
+    </ul>
+    </form>
+
+    <div class="nav">
+        <h2 class="text-center">Step 2: Lender intiates first cash payment</h2>
+        <div class="">Borrower signs the loan contract.</div>
+    </div>
+
+    <form id="initial_cashpayment_form" name="initial_cashpayment_form" enctype="multipart/form-data" method="post" action="">
+    <ul>
+        <li>
+            <label for="initial_current_date">Current date:
+            <input id="initial_current_date" name="initial_current_date" class="datepicker" type="text" value="" size="18">
+            </label>
+        </li>
+        <li>
+            <label for="lender_sends_initialcashpayment">I (lender name) send initial cash payment.
+            <input type="checkbox" id="lender_sends_initialcashpayment" name="lender_sends_initialcashpayment" value="checked">
+            </label>
+        </li>
+        <li>
+            <input id="initialCashPaymentFormButton" name="initialCashPaymentFormButton" type="submit" value="Send Initial Cash Payment">
+        </li>
+    </ul>
+    </form>
+
+
+    <div class="nav">
+        <h2 class="text-center">Step 3: Borrower requests new Drawdown</h2>
+        <div class="">Borrower requests new transaction drawdown.</div>
+    </div>
+
+    <form id="drawdown_form" name="drawdown_form" enctype="multipart/form-data" method="post" action="">
+    <ul>
+        <li>
+            <label for="drawdawn_current_date">Current date:
+                <input id="drawdawn_current_date" name="drawdawn_current_date" class="datepicker" type="text" value="" size="18">
+            </label>
+        </li>
+        <li>
+            <label for="project_progress">Project Progress:
+            <input id="project_progress" name="project_progress" type="text" value="" size="25">
+            </label>
+        </li>
+
+        <li>
+            <input id="drawdownFormButton" name="drawdownFormButton" type="submit" value="Request Drawdown">
+        </li>
+    </ul>
+    </form>
+
+    <div class="nav">
+        <h2 class="text-center">Step 4: Interest Payment</h2>
+        <div class="">Transaction is initiated by Borrower, as Borrower pays to Lender and initiates the payment.</div>
+    </div>
+
+    <form id="interest_payment_form" name="interest_payment_form" enctype="multipart/form-data" method="post" action="">
+        <ul>
+            <li>
+                <label for="interest_current_date">Current date:
+                    <input id="interest_current_date" name="interest_current_date" class="datepicker" type="text" value="" size="18">
+                </label>
+            </li>
+            <li>
+                Interest value: <span class="interest_value"></span>
+            </li>
+    
+            <li>
+                <input id="interestPaymentForm" name="interestPaymentForm" type="submit" value="Pay Interest">
+            </li>
+        </ul>
+    </form>
+
+    <div class="nav">
+            <h2 class="text-center">Step 5 and 6: Repayment until final Repayment</h2>
+            <div class="">Transaction is initiated by Borrower, as Borrower pays to Lender and initiates the payment.</div>
+    </div>
+    <form id="repayment_form" name="repayment_form" enctype="multipart/form-data" method="post" action="">
+        <ul>
+            <li>
+                <label for="repayment_current_date">Current date:
+                    <input id="repayment_current_date" name="repayment_current_date" class="datepicker" type="text" value="" size="18">
+                </label>
+            </li>
+            <li>
+                <label for="repayment_amount">Repayment Amount:
+                <input id="repayment_amount" name="repayment_amount" type="text" value="" size="25">
+                </label>
+            </li>
+            <li>
+                <input id="repaymentForm" name="repaymentForm" type="submit" value="Send Repayment">
+            </li>
+        </ul>
+    </form>
+
+</body>
+</html>
